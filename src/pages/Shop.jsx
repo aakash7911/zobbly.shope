@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Filter, Search } from 'lucide-react';
+import { Filter, Search, Menu } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
 import { useSearchParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ const Shop = () => {
 
   const [activeBrand, setActiveBrand] = useState('All');
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   // Reset brand when category changes
   useEffect(() => {
@@ -39,44 +40,41 @@ const Shop = () => {
           <p className="text-secondary mt-2">Find the perfect products across our premium catalog.</p>
         </div>
 
-        <div className="shop-layout grid">
-          {/* Filters Sidebar */}
-          <aside className="shop-sidebar glass-panel p-6 h-fit">
-            <div className="flex items-center gap-2 mb-6 border-b pb-4">
-              <Filter size={20} className="text-yellow" />
-              <h3>Filters</h3>
-            </div>
-            
-            <div className="filter-group mb-6">
-              <h4 className="mb-3 text-secondary">Brands</h4>
-              <ul className="flex flex-col gap-2">
-                {brands.map(brand => (
-                  <li key={brand}>
-                    <button 
-                      className={`filter-btn ${activeBrand === brand ? 'active' : ''}`}
-                      onClick={() => setActiveBrand(brand)}
-                    >
-                      {brand}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="filter-group">
-              <h4 className="mb-3 text-secondary">Price Range</h4>
-              <input type="range" min="10000" max="100000" className="w-full" />
-              <div className="flex justify-between text-sm mt-2">
-                <span>₹10K</span>
-                <span>₹100K+</span>
+        <div className="shop-layout w-full">
+          <main className="shop-main w-full">
+            <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+              
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsFilterOpen(!isFilterOpen)} 
+                    className="flex items-center gap-2 px-4 py-2 glass-panel rounded-full hover:bg-surface-hover transition-colors"
+                  >
+                    <Menu size={20} className="text-yellow" /> <span className="hidden sm:inline">Filters</span>
+                  </button>
+                  
+                  {isFilterOpen && (
+                    <div className="absolute top-full mt-2 left-0 z-10 glass-panel p-4 rounded-lg w-56 shadow-lg animate-fade-in">
+                      <h4 className="mb-3 text-secondary text-sm border-b border-color pb-2">Filter by Brand</h4>
+                      <ul className="flex-col gap-2">
+                        {brands.map(brand => (
+                          <li key={brand}>
+                            <button 
+                              onClick={() => { setActiveBrand(brand); setIsFilterOpen(false); }}
+                              className={`filter-btn text-sm p-2 ${activeBrand === brand ? 'active' : ''}`}
+                            >
+                              {brand}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+                
+                <span className="text-secondary text-sm">{finalFilteredProducts.length} Products</span>
               </div>
-            </div>
-          </aside>
 
-          {/* Product Grid */}
-          <main className="shop-main">
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-secondary">{finalFilteredProducts.length} Products Found</span>
               <div className="search-bar flex items-center glass-panel px-4 py-2 rounded-full">
                 <Search size={18} className="text-secondary mr-2" />
                 <input 
