@@ -1,0 +1,77 @@
+.pt-80 { padding-top: 80px; }
+.py-8 { padding-top: 32px; padding-bottom: 32px; }
+.pb-4 { padding-bottom: 16px; }
+.h-fit { height: fit-content; }
+.border-b { border-bottom: 1px solid var(--border-color); }
+.rounded-full { border-radius: 9999px; }
+.w-full { width: 100%; }
+.bg-transparent { background: transparent; }
+.outline-none { outline: none; }
+.mr-2 { margin-right: 8px; }
+
+.shop-layout {
+  grid-template-columns: 250px 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.filter-btn {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--bg-surface-hover);
+}
+
+.filter-btn.active {
+  background: var(--accent-yellow);
+  color: var(--text-inverse);
+  font-weight: 600;
+}
+
+/* Custom Range Input styling */
+input[type=range] {
+  -webkit-appearance: none;
+  background: var(--border-color);
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  cursor: pointer;
+  border: none;
+}
+
+.search-bar {
+  width: 300px;
+  border: 1px solid var(--border-color);
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent-yellow);
+}

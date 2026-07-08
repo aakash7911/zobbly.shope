@@ -1,0 +1,47 @@
+.checkout-layout {
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+}
+
+@media (max-width: 992px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--bg-surface-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: all var(--transition-speed) ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--accent-yellow);
+  background-color: var(--bg-main);
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.w-12 { width: 48px; }
+.h-12 { height: 48px; }
+.rounded { border-radius: 4px; }
+.bg-main { background-color: var(--bg-main); }
+.object-cover { object-fit: cover; }
+.text-xs { font-size: 0.75rem; }
+.font-bold { font-weight: 700; }
+.text-lg { font-size: 1.125rem; }
+.text-2xl { font-size: 1.5rem; }
+.py-16 { padding-top: 64px; padding-bottom: 64px; }
+.py-4 { padding-top: 16px; padding-bottom: 16px; }
+
+.checkout-success-container {
+  min-height: calc(100vh - 80px);
+}
