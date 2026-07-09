@@ -21,7 +21,7 @@ const AdminPanel = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/orders/admin');
+      const res = await fetch('https://zobbly-shope.onrender.com/api/orders/admin');
       const data = await res.json();
       if (res.ok) setOrders(data);
     } catch (err) {
@@ -33,7 +33,7 @@ const AdminPanel = () => {
     const trackingId = trackingIds[orderId];
     if (!trackingId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/admin/${orderId}/tracking`, {
+      const res = await fetch(`https://zobbly-shope.onrender.com/api/orders/admin/${orderId}/tracking`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ trackingId })

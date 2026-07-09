@@ -10,7 +10,7 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/api/orders/user/${user.id}`)
+      fetch(`https://zobbly-shope.onrender.com/api/orders/user/${user.id}`)
         .then(res => res.json())
         .then(data => {
           // Filter to show only paid/confirmed orders

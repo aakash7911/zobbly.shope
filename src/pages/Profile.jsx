@@ -17,7 +17,7 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/auth/profile/${user.id}`, {
+      const res = await fetch(`https://zobbly-shope.onrender.com/api/auth/profile/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

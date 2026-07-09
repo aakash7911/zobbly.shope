@@ -10,7 +10,7 @@ export const ProductProvider = ({ children }) => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/products'); // Using full URL temporarily until deployed
+      const res = await fetch('https://zobbly-shope.onrender.com/api/products');
       const data = await res.json();
       if (res.ok) {
         setProducts(data);
@@ -26,12 +26,12 @@ export const ProductProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
-  const addProduct = async (formData) => {
+  const addProduct = async (product) => {
     try {
-      // formData should be a FormData object containing image file and fields
-      const res = await fetch('http://localhost:5000/api/products', {
+      const res = await fetch('https://zobbly-shope.onrender.com/api/products', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product)
       });
       const newProduct = await res.json();
       if (res.ok) {
@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }) => {
 
   const removeProduct = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, { method: 'DELETE' });
+      const res = await fetch(`https://zobbly-shope.onrender.com/api/products/${id}`, { method: 'DELETE' });
       if (res.ok) {
         setProducts(prev => prev.filter(p => p._id !== id));
       }
