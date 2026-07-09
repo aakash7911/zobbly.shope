@@ -1,19 +1,13 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   brand: { type: String, required: true },
-  model: { type: String }, // specific model or variant
-  category: { 
-    type: String, 
-    enum: ['phones', 'clothes', 'beauty'],
-    required: true
-  },
+  condition: { type: String, required: true },
   price: { type: Number, required: true },
-  condition: { type: String, default: 'New' },
-  imageUrl: { type: String }, // Cloudinary URL
-  cloudinaryId: { type: String },
-  stock: { type: Number, default: 10 }
+  category: { type: String, required: true },
+  image: { type: String, required: true }, // Cloudinary URL
+  description: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Product', productSchema);
+export default mongoose.model('Product', productSchema);

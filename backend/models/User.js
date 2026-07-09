@@ -1,28 +1,13 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    unique: true,
-    sparse: true // Allow null for phone users
-  },
-  phone: {
-    type: String,
-    unique: true,
-    sparse: true // Allow null for email users
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  },
-  name: String,
-  addresses: [{
-    street: String,
-    city: String,
-    state: String,
-    zip: String
-  }]
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'user', enum: ['user', 'admin'] },
+  otp: { type: String },
+  otpExpires: { type: Date },
+  isVerified: { type: Boolean, default: false }
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);

@@ -1,22 +1,25 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  items: [{
-    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-    quantity: { type: Number, required: true },
-    priceAtPurchase: { type: Number, required: true }
+  products: [{
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    quantity: { type: Number, default: 1 },
+    price: { type: Number, required: true }
   }],
   totalAmount: { type: Number, required: true },
   shippingAddress: {
-    street: String,
-    city: String,
-    state: String,
-    zip: String
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    postalCode: { type: String, required: true },
+    country: { type: String, required: true }
   },
-  paymentMethod: { type: String, enum: ['card', 'upi'] },
-  paymentStatus: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
-  orderStatus: { type: String, enum: ['processing', 'shipped', 'delivered', 'cancelled'], default: 'processing' }
+  paymentMethod: { type: String, required: true, default: 'Razorpay' },
+  razorpayOrderId: { type: String },
+  razorpayPaymentId: { type: String },
+  isPaid: { type: Boolean, default: false },
+  paidAt: { type: Date },
+  status: { type: String, default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Order', orderSchema);
+export default mongoose.model('Order', orderSchema);
