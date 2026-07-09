@@ -16,7 +16,7 @@ const Home = () => {
       
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="container grid grid-cols-1 md:grid-cols-2 items-center gap-8 hero-inner">
+        <div className="container grid grid-cols-2 items-center gap-8 hero-inner">
           <div className="hero-content">
             <div className="badge delay-100">Premium Refurbished</div>
             <h1 className="hero-title delay-200">
@@ -51,7 +51,7 @@ const Home = () => {
       {/* Features Section */}
       <section className="features-section bg-surface">
         <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-3 gap-8">
             <div className="feature-card glass-panel flex-col items-center text-center p-8">
               <div className="feature-icon text-yellow mb-4">
                 <ShieldCheck size={48} />
@@ -89,7 +89,7 @@ const Home = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 gap-6">
             {featuredPhones.map(phone => (
               <div key={phone.id} className="product-card glass-panel">
                 <div className="product-image-container">

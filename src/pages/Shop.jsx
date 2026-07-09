@@ -41,7 +41,7 @@ const Shop = () => {
   ];
 
   return (
-    <div className="shop-container pt-32">
+    <div className="shop-container pt-80">
       
       {/* Flipkart Style Category Strip */}
       <div className="category-strip bg-surface-dark py-4 mb-4 border-b border-color shadow-sm mt-4">
@@ -73,7 +73,7 @@ const Shop = () => {
               {finalFilteredProducts.length} Items Found
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-6">
               {finalFilteredProducts.map(phone => (
                 <div key={phone.id} className="product-card glass-panel">
                   <div className="product-image-container">
