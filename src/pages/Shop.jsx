@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { Filter, Search, Menu } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import './Shop.css';
 
 const Shop = () => {
   const { addToCart } = useCart();
   const { products: allProducts } = useProducts();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const categoryParam = searchParams.get('category') || 'all';
 
   const [activeBrand, setActiveBrand] = useState('All');
@@ -119,9 +120,17 @@ const Shop = () => {
                     <h3 className="product-name mt-1">{phone.name}</h3>
                     <div className="product-price-row flex items-center justify-between mt-4">
                       <span className="price font-bold text-xl">{phone.price}</span>
-                      <button onClick={() => addToCart(phone)} className="btn-add-cart p-2 rounded-full" title="Add to Cart">
-                        +
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button 
+                          onClick={() => navigate('/checkout', { state: { directPurchase: [phone] } })}
+                          className="bg-yellow text-black px-3 py-1.5 rounded-full text-sm font-bold hover:bg-white transition-colors"
+                        >
+                          Buy Now
+                        </button>
+                        <button onClick={() => addToCart(phone)} className="btn-add-cart p-2 rounded-full" title="Add to Cart">
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

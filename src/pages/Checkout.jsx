@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle, ShieldCheck, CreditCard, Smartphone } from 'lucide-react';
 import './Checkout.css';
 
@@ -9,6 +9,14 @@ const Checkout = () => {
   const { cartItems, subtotal, clearCart } = useCart();
   const { user, openLoginModal } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const directPurchase = location.state?.directPurchase;
+
+  const checkoutItems = directPurchase || cartItems;
+  const checkoutTotal = directPurchase 
+    ? directPurchase.reduce((total, item) => total + (parseInt(item.price.replace(/[₹,]/g, '')) || 0) * (item.quantity || 1), 0)
+    : subtotal;
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
@@ -41,7 +49,7 @@ const Checkout = () => {
     setTimeout(() => {
       setIsProcessing(false);
       setIsSuccess(true);
-      clearCart();
+      if (!directPurchase) clearCart();
       
       // Redirect after 3 seconds
       setTimeout(() => {
@@ -72,7 +80,7 @@ const Checkout = () => {
     );
   }
 
-  if (cartItems.length === 0) {
+  if (checkoutItems.length === 0) {
     return (
       <div className="checkout-empty pt-80 py-16 text-center">
         <h2>Your cart is empty.</h2>
@@ -144,7 +152,7 @@ const Checkout = () => {
               </div>
 
               <button type="submit" className="btn btn-primary w-full py-4 text-lg" disabled={isProcessing}>
-                {isProcessing ? 'Processing Payment...' : `Pay ₹${subtotal.toLocaleString('en-IN')}`}
+                {isProcessing ? 'Processing Payment...' : `Pay ₹${checkoutTotal.toLocaleString('en-IN')}`}
               </button>
 
             </form>
@@ -154,8 +162,8 @@ const Checkout = () => {
             <h3 className="mb-6 border-b pb-4">Order Summary</h3>
             
             <div className="checkout-items flex-col gap-4 mb-6 border-b pb-4">
-              {cartItems.map(item => (
-                <div key={item.id} className="flex justify-between items-center text-sm">
+              {checkoutItems.map((item, index) => (
+                <div key={item.id || index} className="flex justify-between items-center text-sm">
                   <div className="flex items-center gap-3">
                     <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded bg-main" />
                     <div>
@@ -170,7 +178,7 @@ const Checkout = () => {
 
             <div className="flex justify-between mb-4 text-sm">
               <span className="text-secondary">Subtotal</span>
-              <span className="font-bold">₹{subtotal.toLocaleString('en-IN')}</span>
+              <span className="font-bold">₹{checkoutTotal.toLocaleString('en-IN')}</span>
             </div>
             
             <div className="flex justify-between mb-8 text-sm border-b pb-4">
@@ -180,7 +188,7 @@ const Checkout = () => {
 
             <div className="flex justify-between items-center mb-4">
               <span className="text-lg">Total</span>
-              <span className="text-2xl font-bold text-yellow">₹{subtotal.toLocaleString('en-IN')}</span>
+              <span className="text-2xl font-bold text-yellow">₹{checkoutTotal.toLocaleString('en-IN')}</span>
             </div>
           </aside>
 

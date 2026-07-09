@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShieldCheck, Zap, ArrowRight, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
@@ -7,6 +7,7 @@ import './Home.css';
 const Home = () => {
   const { addToCart } = useCart();
   const { products } = useProducts();
+  const navigate = useNavigate();
   
   const featuredPhones = products.filter(p => p.category === 'phones').slice(0, 3);
 
@@ -99,9 +100,17 @@ const Home = () => {
                   <h3 className="product-name">{phone.name}</h3>
                   <div className="product-price-row flex items-center justify-between mt-4">
                     <span className="price font-bold text-xl">{phone.price}</span>
-                    <button onClick={() => addToCart(phone)} className="btn-add-cart p-2 rounded-full" title="Add to Cart">
-                      +
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => navigate('/checkout', { state: { directPurchase: [phone] } })}
+                        className="bg-yellow text-black px-3 py-1.5 rounded-full text-sm font-bold hover:bg-white transition-colors"
+                      >
+                        Buy Now
+                      </button>
+                      <button onClick={() => addToCart(phone)} className="btn-add-cart p-2 rounded-full" title="Add to Cart">
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
