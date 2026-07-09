@@ -6,6 +6,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import LoginModal from './components/LoginModal';
 import AdminLayout from './components/AdminLayout';
+import Profile from './pages/Profile';
 import { useAuth } from './context/AuthContext';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

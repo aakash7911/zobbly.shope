@@ -64,10 +64,10 @@ const Navbar = () => {
           )}
 
           {user ? (
-            <button onClick={logout} className="icon-btn flex items-center gap-2" title="Logout">
-              <LogOut size={20} />
-              <span className="text-sm hidden lg:block">Logout</span>
-            </button>
+            <Link to="/profile" className="icon-btn flex items-center gap-2 text-yellow" title="My Profile">
+              <User size={20} />
+              <span className="text-sm hidden lg:block">{user.name}</span>
+            </Link>
           ) : (
             <button onClick={openLoginModal} className="icon-btn flex items-center gap-2" title="Login">
               <User size={20} />

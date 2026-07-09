@@ -99,7 +99,28 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '7d' });
 
-    res.status(200).json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.status(200).json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role, location: user.location } });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+});
+
+// 4. Update Profile
+router.put('/profile/:id', async (req, res) => {
+  try {
+    const { name, location } = req.body;
+    const user = await User.findById(req.params.id);
+    
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.name = name || user.name;
+    user.location = location || user.location;
+    await user.save();
+
+    res.status(200).json({ 
+      message: 'Profile updated', 
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, location: user.location } 
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
