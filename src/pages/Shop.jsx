@@ -41,11 +41,11 @@ const Shop = () => {
   ];
 
   return (
-    <div className="shop-container pt-80">
+    <div className="shop-container pt-24">
       
       {/* Flipkart Style Category Strip */}
       <div className="category-strip bg-surface-dark py-4 mb-4 border-b border-color shadow-sm mt-4">
-        <div className="container flex justify-center gap-6 overflow-x-auto no-scrollbar px-2">
+        <div className="container flex justify-center gap-12 sm:gap-16 overflow-x-auto no-scrollbar px-2">
           {categories.map(cat => (
             <button 
               key={cat.id}

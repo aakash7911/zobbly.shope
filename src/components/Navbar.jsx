@@ -46,11 +46,7 @@ const Navbar = () => {
         {/* Desktop Navigation & Auth */}
         <nav className="desktop-nav">
           <ul className="flex items-center gap-6">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link to={link.path} className="nav-link">{link.name}</Link>
-              </li>
-            ))}
+            {/* Links removed as per user request */}
           </ul>
         </nav>
 
@@ -100,17 +96,7 @@ const Navbar = () => {
       {/* Mobile Menu Dropdown */}
       <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
         <ul className="flex flex-col gap-4">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link 
-                to={link.path} 
-                className="mobile-nav-link"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
+          {/* Links removed as per user request */}
         </ul>
       </div>
     </header>
