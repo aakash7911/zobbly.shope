@@ -35,26 +35,23 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 2. Add New Product (Admin) - Requires Image Upload
-router.post('/', upload.single('image'), async (req, res) => {
+// 2. Add New Product (Admin) - Uses standard JSON
+router.post('/', async (req, res) => {
   try {
-    const { name, brand, condition, price, category, description } = req.body;
+    const { name, brand, condition, price, category, description, image } = req.body;
     
-    // The image URL comes from Cloudinary after upload
-    const imageUrl = req.file ? req.file.path : '';
-
-    if (!imageUrl) {
-      return res.status(400).json({ message: 'Image upload failed or missing' });
+    if (!image) {
+      return res.status(400).json({ message: 'Image URL is missing' });
     }
 
     const newProduct = new Product({
       name,
       brand,
       condition,
-      price: Number(price),
+      price: isNaN(Number(price)) ? price : Number(price), // store as string if it has symbols
       category,
       description,
-      image: imageUrl
+      image
     });
 
     await newProduct.save();
