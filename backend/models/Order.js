@@ -19,7 +19,9 @@ const orderSchema = new mongoose.Schema({
   razorpayPaymentId: { type: String },
   isPaid: { type: Boolean, default: false },
   paidAt: { type: Date },
-  status: { type: String, default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] }
+  status: { type: String, default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] },
+  trackingId: { type: String, default: null },
+  estimatedDelivery: { type: Date }
 }, { timestamps: true });
 
 export default mongoose.model('Order', orderSchema);

@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, Search, X, User, LogOut, Settings } from 'lucide-react';
+import { ShoppingCart, Menu, Search, X, User, LogOut, Settings, Package } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -64,10 +64,16 @@ const Navbar = () => {
           )}
 
           {user ? (
-            <Link to="/profile" className="icon-btn flex items-center gap-2 text-yellow" title="My Profile">
-              <User size={20} />
-              <span className="text-sm hidden lg:block">{user.name}</span>
-            </Link>
+            <>
+              <Link to="/orders" className="icon-btn flex items-center gap-2 text-yellow" title="My Orders">
+                <Package size={20} />
+                <span className="text-sm hidden lg:block">Orders</span>
+              </Link>
+              <Link to="/profile" className="icon-btn flex items-center gap-2 text-yellow" title="My Profile">
+                <User size={20} />
+                <span className="text-sm hidden lg:block">{user.name}</span>
+              </Link>
+            </>
           ) : (
             <button onClick={openLoginModal} className="icon-btn flex items-center gap-2" title="Login">
               <User size={20} />

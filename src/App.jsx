@@ -7,6 +7,7 @@ import Checkout from './pages/Checkout';
 import LoginModal from './components/LoginModal';
 import AdminLayout from './components/AdminLayout';
 import Profile from './pages/Profile';
+import MyOrders from './pages/MyOrders';
 import { useAuth } from './context/AuthContext';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/orders" element={<MyOrders />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

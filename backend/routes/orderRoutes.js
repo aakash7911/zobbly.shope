@@ -92,4 +92,39 @@ router.get('/user/:userId', async (req, res) => {
   }
 });
 
+// 4. Admin - Get All Orders
+router.get('/admin', async (req, res) => {
+  try {
+    const orders = await Order.find({ isPaid: true }) // Only show paid orders to admin
+      .populate('user', 'name email location')
+      .populate('products.product', 'name price')
+      .sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admin orders', error: error.message });
+  }
+});
+
+// 5. Admin - Update Tracking ID
+router.put('/admin/:id/tracking', async (req, res) => {
+  try {
+    const { trackingId } = req.body;
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+
+    order.trackingId = trackingId;
+    order.status = 'Shipped';
+    
+    // Set estimated delivery to 5 days from now if tracking is added
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + 5);
+    order.estimatedDelivery = deliveryDate;
+
+    await order.save();
+    res.status(200).json({ message: 'Tracking updated', order });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating tracking', error: error.message });
+  }
+});
+
 export default router;
