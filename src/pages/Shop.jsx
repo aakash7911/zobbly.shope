@@ -32,14 +32,45 @@ const Shop = () => {
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
-    <div className="shop-container pt-80">
-      <div className="container py-8">
-        <div className="shop-header mb-8">
-          <h1>Shop <span className="text-yellow capitalize">{categoryParam === 'all' ? 'All Products' : categoryParam}</span></h1>
-          <p className="text-secondary mt-2">Find the perfect products across our premium catalog.</p>
-        </div>
+  const categories = [
+    { id: 'all', name: 'All', icon: '🛍️' },
+    { id: 'phones', name: 'Mobiles', icon: '📱' },
+    { id: 'clothes', name: 'Fashion', icon: '👕' },
+    { id: 'beauty', name: 'Beauty', icon: '💄' }
+  ];
 
+  return (
+    <div className="shop-container pt-20">
+      
+      {/* Flipkart Style Category Strip */}
+      <div className="category-strip bg-surface-dark py-4 mb-6 border-b border-color shadow-sm mt-4">
+        <div className="container flex justify-center gap-8 overflow-x-auto no-scrollbar">
+          {categories.map(cat => (
+            <button 
+              key={cat.id}
+              onClick={() => {
+                const params = new URLSearchParams(searchParams);
+                if (cat.id === 'all') params.delete('category');
+                else params.set('category', cat.id);
+                window.history.pushState(null, '', `?${params.toString()}`);
+                // Instead of full navigation, we can just trigger a re-render or let user use Link
+                // But since we rely on useSearchParams which doesn't auto-update on pushState easily,
+                // let's just use window.location or navigate. 
+                // We don't have navigate imported here. Let's just use window.location for simplicity, or we can import useNavigate.
+                window.location.search = `?${params.toString()}`;
+              }}
+              className={`flex flex-col items-center gap-2 min-w-[80px] transition-transform hover:scale-105 ${categoryParam === cat.id ? 'text-yellow' : 'text-secondary hover:text-white'}`}
+            >
+              <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl ${categoryParam === cat.id ? 'bg-yellow/20 border-2 border-yellow' : 'bg-surface'}`}>
+                {cat.icon}
+              </div>
+              <span className="text-sm font-medium">{cat.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="container py-4">
         <div className="shop-layout w-full">
           <main className="shop-main w-full">
             <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
@@ -50,7 +81,7 @@ const Shop = () => {
                     onClick={() => setIsFilterOpen(!isFilterOpen)} 
                     className="flex items-center gap-2 px-4 py-2 glass-panel rounded-full hover:bg-surface-hover transition-colors"
                   >
-                    <Menu size={20} className="text-yellow" /> <span className="hidden sm:inline">Filters</span>
+                    <Menu size={20} className="text-yellow" /> <span className="hidden sm:inline">Brand Filter</span>
                   </button>
                   
                   {isFilterOpen && (
@@ -72,18 +103,7 @@ const Shop = () => {
                   )}
                 </div>
                 
-                <span className="text-secondary text-sm">{finalFilteredProducts.length} Products</span>
-              </div>
-
-              <div className="search-bar flex items-center glass-panel px-4 py-2 rounded-full">
-                <Search size={18} className="text-secondary mr-2" />
-                <input 
-                  type="text" 
-                  placeholder="Search..." 
-                  className="bg-transparent border-none outline-none text-white w-full"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+                <span className="text-secondary text-sm font-medium">{finalFilteredProducts.length} Items Found</span>
               </div>
             </div>
 
