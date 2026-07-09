@@ -75,10 +75,6 @@ const AdminPanel = () => {
     setProductData({ ...productData, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = (e) => {
-    setProductData({ ...productData, image: e.target.files[0] });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const newProduct = {
@@ -87,12 +83,12 @@ const AdminPanel = () => {
       price: `₹${parseInt(productData.price).toLocaleString('en-IN')}`,
       category: productData.category,
       condition: 'New',
-      image: productData.image ? URL.createObjectURL(productData.image) : 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1000'
+      image: productData.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1000'
     };
     
     addProduct(newProduct);
     alert('Product Added successfully!');
-    setProductData({ name: '', brand: '', price: '', category: 'phones', model: '', image: null });
+    setProductData({ name: '', brand: '', price: '', category: 'phones', model: '', image: '' });
   };
 
   return (
@@ -131,11 +127,14 @@ const AdminPanel = () => {
                 <input required type="text" name="name" value={productData.name} onChange={handleChange} placeholder="Product Name" className="form-input text-sm" />
                 <input required type="text" name="brand" value={productData.brand} onChange={handleChange} placeholder="Brand" className="form-input text-sm" />
                 <input required type="number" name="price" value={productData.price} onChange={handleChange} placeholder="Price (₹)" className="form-input text-sm" />
-                <div className="upload-box form-input flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden text-sm">
-                  <Upload size={16} className="text-secondary" />
-                  <span className="text-secondary text-xs truncate max-w-[150px]">{productData.image ? productData.image.name : 'Upload Image'}</span>
-                  <input type="file" onChange={handleImageUpload} className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" accept="image/*" />
-                </div>
+                <input 
+                  type="text" 
+                  name="image" 
+                  value={productData.image || ''} 
+                  onChange={handleChange} 
+                  placeholder="Paste Image URL (link)" 
+                  className="form-input text-sm" 
+                />
               </div>
               <button type="submit" className="btn btn-primary mt-2">Save Product</button>
             </form>
